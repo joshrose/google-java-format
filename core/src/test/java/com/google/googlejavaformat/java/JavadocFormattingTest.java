@@ -1897,7 +1897,6 @@ class Test {}
         class Test {}
         """
             .replace("moe", "MOE");
-    // TODO(kak): Ideally the extra blank lines would not be inserted after the code block
     String expected =
         """
         /// This is the first line.
@@ -1908,8 +1907,6 @@ class Test {}
         /// ```
         /// this is a code block
         /// ```
-        ///
-        ///
         /// <!-- moe:end_intracomment_strip -->
         class Test {}
         """

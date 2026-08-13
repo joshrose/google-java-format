@@ -331,6 +331,7 @@ final class JavadocWriter {
   }
 
   void writeMoeEndStripComment(MoeEndStripComment token) {
+    requestedWhitespace = NONE;
     writeLineBreakNoAutoIndent();
     output.append(indentForMoeEndStripComment);
 
