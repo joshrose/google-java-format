@@ -31,7 +31,7 @@ repositories {
 
 // https://github.com/google/google-java-format/releases
 val googleJavaFormatVersion = "1.36.1"
-val pluginPatchVersion = "0"
+val pluginPatchVersion = "1"
 
 java {
   toolchain { languageVersion = JavaLanguageVersion.of(21) }
