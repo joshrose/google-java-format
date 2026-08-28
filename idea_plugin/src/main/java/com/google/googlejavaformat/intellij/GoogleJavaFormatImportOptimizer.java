@@ -16,7 +16,6 @@
 
 package com.google.googlejavaformat.intellij;
 
-import com.google.common.util.concurrent.Runnables;
 import com.google.googlejavaformat.java.FormatterException;
 import com.google.googlejavaformat.java.ImportOrderer;
 import com.google.googlejavaformat.java.JavaFormatterOptions;
@@ -43,14 +42,14 @@ public class GoogleJavaFormatImportOptimizer implements ImportOptimizer {
     Project project = file.getProject();
 
     if (!JreConfigurationChecker.checkJreConfiguration(file.getProject())) {
-      return Runnables.doNothing();
+      return () -> {};
     }
 
     PsiDocumentManager documentManager = PsiDocumentManager.getInstance(project);
     Document document = documentManager.getDocument(file);
 
     if (document == null) {
-      return Runnables.doNothing();
+      return () -> {};
     }
 
     JavaFormatterOptions.Style style = GoogleJavaFormatSettings.getInstance(project).getStyle();
@@ -61,14 +60,14 @@ public class GoogleJavaFormatImportOptimizer implements ImportOptimizer {
       text = ImportOrderer.reorderImports(RemoveUnusedImports.removeUnusedImports(origText), style);
     } catch (FormatterException e) {
       Notifications.displayParsingErrorNotification(project, file.getName());
-      return Runnables.doNothing();
+      return () -> {};
     }
 
     // pointless to change document text if it hasn't changed, plus this can interfere with
     // e.g. GoogleJavaFormattingService's output, i.e. it can overwrite the results from the main
     // formatter.
     if (text.equals(origText)) {
-      return Runnables.doNothing();
+      return () -> {};
     }
 
     return () -> {
